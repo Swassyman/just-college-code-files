@@ -62,7 +62,87 @@ void insert(Node** head, Node** last, int pos, char name[], int duration, char a
         *last = newNode;
     }
 }
+void insertEnd(Node** head, Node** last, char name[], int duration, char artist[]) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    if (newNode == NULL) {
+        printf("Memory could not be allocated\n");
+        return;
+    }
+    
+    strcpy(newNode->musicName, name);
+    strcpy(newNode->musicArtist, artist);
+    newNode->durationSeconds = duration;
 
+    if (*head == NULL) {
+        newNode->next = newNode; // Point to itself for circular structure
+        *head = newNode;
+        *last = newNode;
+    } else {
+        newNode->next = *head;
+        (*last)->next = newNode;
+        *last = newNode; // Update last pointer
+    }
+}
+
+void deleteFront(Node** head, Node** last) {
+    if (*head == NULL) {
+        printf("List is Empty\n");
+        return;
+    }
+
+    Node* temp = *head;
+    if (*head == *last) { // Only one element in the list
+        *head = NULL;
+        *last = NULL;
+    } else {
+        *head = (*head)->next;
+        (*last)->next = *head; // Maintain circular structure
+    }
+    free(temp);
+}
+
+void deletePosition(Node** head, Node** last, int pos) {
+    Node* temp = *head;
+    if (pos == 1) {
+        deleteFront(head, last);
+        return;
+    }
+
+    for (int i = 1; i < pos - 1; i++) {
+        temp = temp->next;
+    }
+
+    Node* temp2 = temp->next;
+    temp->next = temp->next->next;
+
+    // If the last node is deleted, update the last pointer
+    if (temp2 == *last) {
+        *last = temp;
+        (*last)->next = *head; // Maintain circular structure
+    }
+
+    free(temp2);
+}
+
+void deleteEnd(Node** head, Node** last) {
+    if (*head == NULL) {
+        printf("List is Empty\n");
+        return;
+    }
+
+    Node* temp = *head;
+    if (*head == *last) { // Only one element
+        *head = NULL;
+        *last = NULL;
+    } else {
+        while (temp->next != *last) {
+            temp = temp->next;
+        }
+        temp->next = *head;
+        free(*last);
+        *last = temp; // Update last pointer
+    }
+}
 void display(Node* head, int times) {
     if (head == NULL) {
         printf("List is Empty\n");
@@ -122,9 +202,31 @@ int main() {
                         insert(&head, &last, position, name, duration, artist);
                     }
                 }
+                else if (insertionChoice == 3) {
+                	insertEnd(&head, &last, name, duration, artist);
+                }
                 break;
             }
+        	case 2: {
+	        	int deletionChoice;
+	        	printf("1-At front\n2-Anywhere\n3-At end\n");
+	        	scanf("%d", &deletionChoice);
 
+	        	if (deletionChoice == 1) {
+	        		deleteFront(&head, &last);
+	        	}
+	        	else if (deletionChoice == 2) {
+	        		int position;
+	        		printf("At what position: ");
+	        		scanf("%d", &position);
+
+	        		if (position <= 0) {
+	        			printf("Invalid Position\n");
+	        		}
+	        		else deletePosition(&head, &last, position);
+	        	}
+	        	break;
+        	}
             case 3: {
                 int loop;
                 printf("Do you want to keep looping?\n1- Yes\n0- No\n");
