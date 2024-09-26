@@ -104,7 +104,7 @@ void multiply(Node** head, Node** head1, Node** head2) {
 	while(temp1 != NULL) {
 		temp2 = *head2;	
 		while(temp2 != NULL) {
-			int product = temp1->power + temp2->power;
+			Node* newNode = createNode(temp1->coeff * temp2->coeff, temp1->power + temp2->power);
 			if(*head == NULL) {
 				*head = newNode;
 			}
