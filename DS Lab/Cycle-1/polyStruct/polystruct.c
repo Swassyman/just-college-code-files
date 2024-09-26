@@ -4,8 +4,6 @@ struct Poly{
 	int degree;
 };
 int top = -1;
-void removeRepeats(struct Poly arr[], int size){
-}
 void push(struct Poly res[], int coff, int deg){
 	top++;
 	res[top].coeff = coff;
@@ -106,9 +104,9 @@ void main(){
 		prod[i].coeff = 0;
 		prod[i].degree = 0;
 	}
+	printf("\n");
 	sumPoly(p1, p2, sum, order);
 	display(sum, order);
-	printf("\n");
 	prodPoly(p1, p2, prod, n1, n2);
 	display(prod, n1*n2);
 }

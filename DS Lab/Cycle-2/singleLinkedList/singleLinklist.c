@@ -94,7 +94,7 @@ void display(Node* head){
 	}
 	printf("\n");
 }
-int main(){
+int main() {
 	Node* temp;
 	Node* head;
 	Node* newNode;
