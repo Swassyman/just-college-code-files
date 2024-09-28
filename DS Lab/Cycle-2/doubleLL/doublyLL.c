@@ -8,7 +8,7 @@ typedef struct Node {
 }Node;
 
 Node* createNode(){
-	Node* newNode = (Node*0)malloc(sizeof(Node));
+	Node* newNode = (Node*)malloc(sizeof(Node));
 
 	//check for null alloc
 	if (newNode == NULL) {
@@ -101,7 +101,7 @@ void deleteFront(Node** head) {
 	Node* temp = *head;
 
 	*head = temp -> next; //head is the next node
-	*head -> prev = NULL; //the prev node of head is set to null
+	(*head) -> prev = NULL; //the prev node of head is set to null
 	
 	free(temp);
 }
@@ -178,14 +178,14 @@ int main() {
 
 	//menu 
 	int choice;
+	menu:
 	printf("1- Insert a node\n2- Delete a node\n3- Display the nodes\n4- Exit\n");
-	scanf("%d". &choice);
+	scanf("%d", &choice);
 
 	switch(choice) {
 	case 1:
 		{
 			//insert menu
-			menu:
 			int insertionChoice;
 			printf("1- Insert at Front\n2- Insert at position\n3- Insert at end\n");
 			scanf("%d", &insertionChoice);
@@ -246,7 +246,7 @@ int main() {
 		}
 	case 3:
 		{
-			display(*head);
+			display(head);
 			goto menu;
 		}
 	default: return 0;

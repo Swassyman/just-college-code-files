@@ -130,26 +130,18 @@ void deleteEnd(Node** head, Node** last) {
         return;
     }
 
-    // Handle the case when there is only one node
-    if (*head == *last) {
-        free(*head);
+    Node* temp = *head;
+    if (*head == *last) { // Only one element
         *head = NULL;
         *last = NULL;
-        return;
+    } else {
+        while (temp->next != *last) {
+            temp = temp->next;
+        }
+        temp->next = *head;
+        free(*last);
+        *last = temp; // Update last pointer
     }
-
-    // Traverse the list to find the node before the last node
-    Node* temp = *head;
-    while (temp->next != *last) {
-        temp = temp->next;
-    }
-
-    // Update the next pointer of the node before the last
-    temp->next = *head;
-    
-    // Free the last node and update the last pointer
-    free(*last);
-    *last = temp;
 }
 void display(Node* head, int times) {
     if (head == NULL) {
@@ -209,7 +201,6 @@ int main() {
                     } else {
                         insert(&head, &last, position, name, duration, artist);
                     }
-
                 }
                 else if (insertionChoice == 3) {
                 	insertEnd(&head, &last, name, duration, artist);
