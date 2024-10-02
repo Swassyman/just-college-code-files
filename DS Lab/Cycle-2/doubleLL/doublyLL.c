@@ -59,14 +59,14 @@ void insertAnywhere(Node** head, int x, int pos) {
 	Node* temp = *head;
 	for(int i = 1; i<pos-1; i++){
 		temp = temp->next;
+		//if position is out of bounds
+		if (temp == NULL) {
+			printf("Out of Bounds\n");
+			free(newNode);
+			return;
+	}
 	}
 
-	//if position is out of bounds
-	if (temp == NULL) {
-		printf("Out of Bounds\n");
-		free(newNode);
-		return;
-	}
 
 	//updating newnode
 	newNode -> next = temp -> next;
