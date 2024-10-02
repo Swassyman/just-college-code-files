@@ -77,8 +77,6 @@ void swap(Node** head, int x, int y){
 	else
 		*head = currX;
 
-	prevY -> next = currX;
-
 	Node* temp = currX -> next;
 	currX -> next = currY -> next;
 	currY -> next = temp;
@@ -117,11 +115,11 @@ int main(){
 	newNode->data = x;
 	newNode->next = NULL;
 	menu:
-	int choice;
 	printf("1-Insertion\n2-Swap\n3-Display\n4-Exit\n");
+	int choice;
 	scanf("%d", &choice);
 	switch(choice){
-		case 1:
+		case 1:{
 			int insertionChoice;
 			printf("1-At front\n2-Anywhere\n3-At end\n");
 			scanf("%d", &insertionChoice);
@@ -132,7 +130,7 @@ int main(){
 				case 1:
 					insertFront(&head, item);
 					goto menu;
-				case 2:
+				case 2:{
 					int position;
 					printf("At what position: ");
 					scanf("%d", &position);
@@ -142,16 +140,19 @@ int main(){
 					}
 					insert(&head, position, item);
 					goto menu;
+				}
 				case 3:
 					insertEnd(&head, item);
 					goto menu;
 			}
-		case 2:
+		}
+		case 2:{
 			int posX, posY;
 			printf("Enter position of swapping nodes:\n");
 			scanf("%d %d", &posX, &posY);
 			swap(&head, posX, posY);
 			goto menu;
+		}
 		case 3: 
 			display(head);
 			goto menu;
