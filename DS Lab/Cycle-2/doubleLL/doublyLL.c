@@ -178,7 +178,7 @@ void display(Node* head){
 }
 int main() {
 	Node* head = NULL;
-
+	int lengthList = 0;
 	//menu 
 	int choice;
 	menu:
@@ -198,6 +198,8 @@ int main() {
 			printf("Enter data of node: ");
 			scanf("%d", &item);
 
+			lengthList++;
+
 			switch(insertionChoice) {
 			case 1:
 				{
@@ -206,9 +208,16 @@ int main() {
 				}
 			case 2:
 				{
+
 					int position;
 					printf("Enter position to insert: ");
 					scanf("%d", &position);
+
+					if(position>lengthList){
+						printf("Out of Bounds\n");
+						goto menu;	
+					}
+
 					insertAnywhere(&head, item, position);
 					goto menu;
 				}
@@ -237,6 +246,7 @@ int main() {
 			case 1:
 				{
 					deleteFront(&head);
+					lengthList--;
 					goto menu;
 				}
 			case 2:
@@ -244,12 +254,19 @@ int main() {
 					int position;
 					printf("Enter position to delete: ");
 					scanf("%d", &position);
+
+					if(position>lengthList){
+						printf("Out of Bounds\n");
+					}
+
 					deleteAnywhere(&head, position);
+					lengthList--;
 					goto menu;
 				}
 			case 3:
 				{
 					deleteEnd(&head);
+					lengthList--;
 					goto menu;
 				}
 			}
