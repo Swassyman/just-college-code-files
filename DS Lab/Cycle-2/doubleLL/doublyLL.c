@@ -166,8 +166,7 @@ void display(Node* head){
 		printf("List is Empty\n");
 		return;
 	}
-	Node* temp;
-	temp = head;
+	Node* temp = head;
 	while(temp!=NULL){
 		if(temp->next==NULL)
 			printf("%d", temp->data);
@@ -222,9 +221,12 @@ int main() {
 		}
 	case 2:
 		{
-			if(head == NULL) {
-				printf("List is Empty\n");
-				goto menu;
+			if(head == NULL) {
+
+				printf("List is Empty\n");
+
+				goto menu;
+
 			}
 			//delete menu
 			int deletionChoice;
