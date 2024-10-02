@@ -122,6 +122,10 @@ void deleteAnywhere(Node** head, int pos) {
 	Node* temp = *head;
 	for (int i = 1; i < pos; i++) {
 		temp = temp -> next;
+		if (temp == NULL) {
+			printf("Out of Bounds\n");
+			return;
+	}
 	}
 
 	//deleting node
@@ -218,6 +222,10 @@ int main() {
 		}
 	case 2:
 		{
+			if(head == NULL) {
+				printf("List is Empty\n");
+				goto menu;
+			}
 			//delete menu
 			int deletionChoice;
 			printf("1- Delete at Front\n2- Delete at position\n3- Delete at end\n");
