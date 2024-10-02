@@ -48,7 +48,7 @@ void insert(Node** head, Node** last, int pos, int x) {
     if (temp == *last) {
         *last = newNode;
         (*last)->next = *head; // Maintain circular structure
-    }
+    }   
 }
 
 void insertEnd(Node** head, Node** last, int x) {
@@ -147,7 +147,6 @@ void display(Node* head) {
 
 int main() {
     Node* head = NULL, *last = NULL;
-    int x;
 
     menu:
     {

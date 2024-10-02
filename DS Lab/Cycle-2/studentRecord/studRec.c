@@ -163,7 +163,7 @@ int main(){
 
 			goto insertionmenu;
 		case 2:
-			int key, pos = 0;
+			int key;
 			printf("Enter roll number to search: ");
 			scanf("%d", &key);
 			int ind = search(&head, key);
