@@ -1,22 +1,31 @@
 .data
-n: .word 4
-nums: .word 10 12 14 16
-str: .string "Sum: "
+
+n: .word 20
+msg: .string "Fibonacci Series is " 
 space: .string " "
 
 .text
-    lw a2 n
-    la a3 nums
-    
-loop:
-    lw x2 0(a3) 
-    addi x1 x1 0
-    add x1 x1 x2
+li x1,0
+li x2,1
+lw a2,n
+la a0,msg
+li a7,4
+ecall
 
-    addi a3 a3 4
-    addi a2 a2 -1
-    bgt a2 x0 loop
-    
-    mv a0 x1
-    li a7 1
+loop:
+    mv a0,x1
+    li a7,1
     ecall
+
+    la a0,space
+    li a7,4
+    ecall
+
+    add x3,x1,x2
+    mv x1,x2
+    mv x2,x3
+    addi a2,a2,-1
+    bne a2,x0,loop
+
+end:
+    nop
