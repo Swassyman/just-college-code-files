@@ -325,7 +325,7 @@ int main() {
 					goto menu;
 				}
 			}
-		}
+		}	
 	case 2:
 		{
 			//delete menu
