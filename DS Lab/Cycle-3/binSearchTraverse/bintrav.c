@@ -30,7 +30,7 @@ Node* insert(Node* root, int val) {
 void preOrder(Node* root) {
 	if(root == NULL) return;
 
-	printf("%d", root->val);
+	printf("%d ", root->val);
 	preOrder(root->left);
 	preOrder(root->right);
 }
@@ -40,14 +40,14 @@ void postOrder(Node* root) {
 
 	postOrder(root->left);
 	postOrder(root->right);
-	printf("%d", root->val);
+	printf("%d ", root->val);
 }
 
 void inOrder(Node* root) {
 	if(root == NULL) return;
 
 	inOrder(root->left);
-	printf("%d", root->val);
+	printf("%d ", root->val);
 	inOrder(root->right);
 }
 
@@ -84,14 +84,26 @@ int main() {
 						case 1: {
 							printf("Preorder: ");
 							preOrder(root);
+							printf("\n");
 							break;
 						}
 						case 2: {
-							printf("Inorder: ");	
+							printf("Inorder: ");
+							inOrder(root);	
+							printf("\n");
 							break;
 						}
+						case 3:
+							{
+								printf("Postorder: ");
+								postOrder(root);
+								printf("\n");
+								break;
+							}
+						default: break;
 					}
 				}
+				default: break;
 		}
 	}
 	return 0;
