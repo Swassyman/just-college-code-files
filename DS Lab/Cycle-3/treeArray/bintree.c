@@ -3,54 +3,77 @@
 #include <stdlib.h>
 
 
-int calculateHeight(int* tree, int n) {
-	int nodeCount = 0;
-	for(int i = 0; i<n; i++) {
-		if(tree[i] != -999) nodeCount++;
+void create(int* tree, int i, int nodeCount) {
+	if(tree[0] == -1) {
+		printf("Enter data for root node: ");
+		scanf("%d", &tree[0]);
 	}
 
-	return (int) log2(nodeCount + 1);
+	int choice;
+	printf("1- Add left child\n2- Add right child\n3- Add none\n");
+	scanf("%d", &choice);	
+	if(choice == 1) {
+		printf("Enter data for left child: ");
+		scanf("%d", &tree[2 * i + 1]);
+		create(tree, 2 * i + 1, nodeCount);
+		nodeCount++;
+	}
+	else if(choice == 2) {
+		printf("Enter data for right child: ");
+		scanf("%d", &tree[2 * i + 2]);
+		create(tree, 2 * i + 2, nodeCount);
+		nodeCount++;
+	}
+	else {
+		tree[i] = -1;
+	}
 }
+
+int calculateHeight(int* tree, int n) {
+
+	return (int) log2(n + 1);;
+}
+
 void display(int* tree, int n) {
 
 	//print all data nodes
-	for(int i = 0; i < n; i++) {
-		if(tree[i] != -999) printf("%d ", tree[i]);
-		else printf("null ");
+	for(int i = 0; i < n;) {
+		if(tree[i] != -1) {
+			printf("%d ", tree[i]);
+			i++;
+		}
 	}
 }
 
+
 int main() {
 
-	int n;
-	printf("Enter number of nodes available in the tree: ");
-	scanf("%d", &n);
-
-	int* tree = (int*) malloc(n * sizeof(int));
-
-	for(int i = 0; i < n; i++) {
-		printf("Enter data for node %d: ", i + 1);	
-		scanf("%d", &tree[i]);
-	}
-
+	int tree[50];
+	tree[0] = -1;
+	int nodeCount = 0;
 	while(1) {
 		int choice;
-		printf("1- Display Tree Level Order\n2- Height of The Tree\n");
+		printf("1- Create Tree\n2- Display Tree Level Order\n3- Height of The Tree\n");
 		scanf("%d", &choice);
 
 		switch(choice) {
 			case 1:
-				{	
-					display(tree, n);
-					printf("\n");
+				{
+					create(tree, 0, nodeCount);
 					break;
 				}
 			case 2:
-				{
-					printf("%d\n", calculateHeight(tree, n));
+				{	
+					display(tree, nodeCount);
+					printf("\n");
 					break;
 				}
 			case 3:
+				{
+					printf("%d\n", calculateHeight(tree, nodeCount));
+					break;
+				}
+			case 4:
 				return 0;
 		}	
 
