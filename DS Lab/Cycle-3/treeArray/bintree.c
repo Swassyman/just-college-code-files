@@ -5,6 +5,7 @@
 
 int calculateHeight(int* tree, int n) {
 	int nodeCount = 0;
+	//count number of nodes
 	for(int i = 0; i<n; i++) {
 		if(tree[i] != -999) nodeCount++;
 	}
