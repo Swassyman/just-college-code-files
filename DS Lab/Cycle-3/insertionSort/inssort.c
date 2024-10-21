@@ -1,4 +1,4 @@
-#include<stdio.h>
+i#nclude<stdio.h>
 #include<stdlib.h>
 
 void insertSort(int* arr, int n) {
