@@ -10,8 +10,8 @@ int partition(int* arr, int low, int high) {
 	int i = low, j = high, pivot = low;
 
 	while(i<j) {
-		while(arr[i] <= arr[pivot] && i<high) i++;
-		while(arr[j] > arr[pivot] && j>low) j--;
+		while(arr[i] <= arr[pivot] && i<high) i++; //find right position from left
+		while(arr[j] > arr[pivot] && j>low) j--; //find right position from right
 
 		if(i<j) {
 			swap(&arr[i], &arr[j]);
@@ -25,8 +25,8 @@ void quickSort(int* arr, int low, int high) {
 	
 	if(low < high) {
 		int j = partition(arr, low, high);
-		quickSort(arr, low, j-1);
-		quickSort(arr, j+1, high);
+		quickSort(arr, low, j-1); //sort left side
+		quickSort(arr, j+1, high); //sort right side
 	}
 }
 
