@@ -40,8 +40,8 @@ void heapify(Heap *h, int i) {
 		h->heap[smallest] = temp;
 		heapify(h, smallest);
 	}
-	
 }
+
 void delete(Heap *h, int i) {
 	
 	if(i<0 || i>h->size) {
@@ -123,7 +123,4 @@ int main() {
 			default: return 0;	
 		}
 	}
-	
-
-
 }
