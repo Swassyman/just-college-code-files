@@ -46,17 +46,6 @@ void display(int arr[], int n) {
 
 }
 
-void display(int* tree, int* n) {
-	//print all data nodes
-	for(int i = 0, j = 0; j < *n; i++) {
-		if(tree[i] != -1) {
-			printf("%d ", tree[i]);
-			j++; //increment only when non null node
-		}
-	}
-	printf("\n");
-}
-
 int main() {
 
 	int n;
