@@ -1,0 +1,18 @@
+Write a shell script program to perform arithmetic operations on two numbers
+
+write a shell script program demonstrate use of command line parametrs in shell script
+(script name, total parameters, each parameter)
+
+write a shell script program to check whether two strings sent as command line arguments
+are same or not using test command
+
+write a shell script program to read a particular name and check whether it is a file or directory
+
+write a shell script menu driven program to implement a simple calculator
+
+write a shell script program to count the number of files in the current directory beginning with the specified character
+
+write a shell script program to read the lines from one file and store them into another file
+after converting all the vowels from first file into uppercase
+
+write a shell script program that accepts the name of the user and prints the entered name in reverse and also print the length of the entered name
