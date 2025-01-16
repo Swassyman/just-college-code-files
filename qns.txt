@@ -15,4 +15,6 @@ write a shell script program to count the number of files in the current directo
 write a shell script program to read the lines from one file and store them into another file
 after converting all the vowels from first file into uppercase
 
-write a shell script program that accepts the name of the user and prints the entered name in reverse and also print the length of the entered name
+write a shell script program that accepts the name of the user and prints the entered name in reverse and also print the length of the entered name.
+
+write a shell script program consider a file school.dat with the following fields, Rollno, name and marks. Write a shell script program to sort the file in descending order of marks.
