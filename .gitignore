@@ -1,1 +1,3 @@
-*.out
+# Ignore files without extensions (be careful with this)
+.*
+!*/ # (Prevents ignoring directories)
