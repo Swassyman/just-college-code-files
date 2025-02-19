@@ -29,7 +29,6 @@ void findTurnAroundTime(process p[],int n) {
 		p[i].tat = p[i].wt + p[i].burst;
 	}	
 }
-
 int main() {
 	printf("Enter the number of processes:");
 	int n;

@@ -7,14 +7,14 @@ typedef struct process{
 	int wt;
 	int tat;
 }process;
-void srtf(process p[],int n, int finished[]) {
+void srtf(process p[],int n) {
 	int time = 0;
 	int complete = 0;
 	while(complete<n) {
 		int min_remaining = 999;
 		int min_index = -1;
 		for(int i = 0; i<n;i++) {
-			if(p[i].at <= time && !finished[i] && p[i].rt <= min_remaining) {
+			if(p[i].at <= time && p[i].rt>0 && p[i].rt <= min_remaining) {
 				min_remaining = p[i].rt;
 				min_index = i;
 			}
@@ -27,7 +27,6 @@ void srtf(process p[],int n, int finished[]) {
 		time++;
 
 		if(p[min_index].rt==0) {
-			finished[min_index] = 1;
 			complete++;
 			p[min_index].tat = time - p[min_index].at;
 			p[min_index].wt = p[min_index].tat - p[min_index].bt;
@@ -46,7 +45,6 @@ int main() {
 	int n;
 	scanf("%d",&n);
 	process p[n];
-	int finished[n];
 	//inputting pid and burst time
 	for(int i=0;i<n;i++) {
 		printf("Enter the burst time of process %d:",i+1);	
@@ -55,8 +53,7 @@ int main() {
 		scanf("%d",&p[i].at);
 		p[i].pid=i+1;
 		p[i].rt = p[i].bt;
-		finished[i] = 0;
 	}
-	srtf(p,n, finished);
+	srtf(p,n);
 	printProcesses(p,n);
 }
