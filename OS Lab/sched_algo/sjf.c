@@ -4,6 +4,7 @@ typedef struct process{
 	int burst;
 	int wt;
 	int tat;
+	int rt;
 } process;
 void sortProcesses(process p[],int n) {
 	for(int i = 0; i < n-1; i++) {	
@@ -22,12 +23,17 @@ void findWaitingTime(process p[],int n) {
 		for(int j = 0; j<i; j++){
 			p[i].wt += p[j].burst;
 		}
-	}	
+	} 
 }
 void findTurnAroundTime(process p[],int n) {
 	for(int i = 0; i<n; i++) {
 		p[i].tat = p[i].wt + p[i].burst;
-	}	
+	} 
+}
+void findResponseTime(process p[],int n) {
+	for(int i = 0; i<n; i++) {
+		p[i].rt = p[i].wt;
+	}
 }
 int main() {
 	printf("Enter the number of processes:");
@@ -48,8 +54,10 @@ int main() {
 	findWaitingTime(p,n);
 	//calculate turn around time
 	findTurnAroundTime(p,n);
-	//print waiting time and turnaround time
+	//calculate response time
+	findResponseTime(p,n);
+	//print waiting time, turnaround time, and response time
 	for(int i=0;i<n;i++) {
-		printf("Process %d\t%d\t%d\n",p[i].pid,p[i].wt,p[i].tat);	
+		printf("Process %d\t%d\t%d\t%d\n",p[i].pid,p[i].wt,p[i].tat,p[i].rt);	
 	}
 }
