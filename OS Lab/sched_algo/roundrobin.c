@@ -6,6 +6,8 @@ typedef struct {
     int rt;
     int wt;
     int tat;
+    int first_time;
+    int response_time;
 } Process;
 void roundRobin(Process p[], int n, int quantum) {
     int time = 0, complete = 0;
@@ -14,6 +16,10 @@ void roundRobin(Process p[], int n, int quantum) {
         for (int i = 0; i < n; i++) {
             if(p[i].rt>0 && p[i].at <= time) {
                 idle = 0;
+                if(p[i].rt == p[i].bt) {
+                    p[i].first_time = time;
+                    p[i].response_time = p[i].first_time - p[i].at;
+                }
                 if(p[i].rt > quantum ) {
                     time += quantum;
                     p[i].rt -= quantum;
@@ -34,9 +40,9 @@ void roundRobin(Process p[], int n, int quantum) {
     }
 }
 void printProcesses(Process p[], int n) {
-    printf("\nPID  Arrival  Burst  Turnaround  Waiting\n");
+    printf("\nPID  Arrival  Burst  Turnaround  Waiting  Response\n");
     for (int i = 0; i < n; i++) {
-        printf("%3d  %7d  %5d  %10d  %7d\n", p[i].pid, p[i].at, p[i].bt, p[i].tat, p[i].wt);
+        printf("%3d  %7d  %5d  %10d  %7d  %8d\n", p[i].pid, p[i].at, p[i].bt, p[i].tat, p[i].wt, p[i].response_time);
     }
 }
 int main() {
@@ -52,6 +58,8 @@ int main() {
         
         p[i].pid = i + 1;
         p[i].rt = p[i].bt;
+        p[i].first_time = -1;
+        p[i].response_time = -1;
     }
     printf("Enter time quantum: ");
     scanf("%d", &quantum);
