@@ -11,6 +11,11 @@ void findTurnAroundTime(int processes[], int burst[], int n, int wt[], int tat[]
         tat[i] = burst[i] + wt[i];
     }
 }
+void findResponseTime(int processes[], int n, int wt[], int rt[]) {
+    for(int i = 0; i<n; i++) {
+        rt[i] = wt[i];
+    }
+}
 void print(int arr[], int n) {
     for(int i = 0; i<n; i++) {
         printf("%d ", arr[i]);
@@ -18,7 +23,7 @@ void print(int arr[], int n) {
     printf("\n");
 }
 void averageTime(int processes[], int burst[], int n) {
-    int wt[n], tat[n];
+    int wt[n], tat[n], rt[n];
 
     //tofindwaitingtme
     findWaitingTime(processes, burst, n, wt);
@@ -27,6 +32,8 @@ void averageTime(int processes[], int burst[], int n) {
     //tofindturnaroundtime
     findTurnAroundTime(processes, burst, n, wt, tat);
     //sum it up and divide by n
+
+    findResponseTime(processes, n, wt, rt);
 
     print(wt, n);
     print(tat, n);
