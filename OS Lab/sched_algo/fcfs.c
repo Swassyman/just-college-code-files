@@ -35,8 +35,9 @@ void averageTime(int processes[], int burst[], int n) {
 
     findResponseTime(processes, n, wt, rt);
 
-    print(wt, n);
-    print(tat, n);
+    printf("Waiting Time "); print(wt, n);
+    printf("Turnaround Time "); print(tat, n);
+    printf("Response Time "); print(rt, n);
 }
 int main() {
     //array of processes
@@ -44,7 +45,7 @@ int main() {
     int n = sizeof(processes)/sizeof(processes[0]);
 
     //array of burst times
-    int burst[] = {5, 10, 15};
+    int burst[] = {100, 200, 300};
 
     //find average time of processes
     averageTime(processes, burst, n);
