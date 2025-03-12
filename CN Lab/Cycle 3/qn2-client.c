@@ -7,29 +7,24 @@
 #define PORT 12345
 #define BUFFER_SIZE 1024
 
-// Function to start the client
 void start_client(int part, const char *data) {
     int sock_fd;
     struct sockaddr_in server_addr;
     char buffer[BUFFER_SIZE];
 
-    // Create socket
     if ((sock_fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
         perror("Socket creation failed");
         exit(EXIT_FAILURE);
     }
 
-    // Configure server address
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(PORT);
     server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
-    // Send part number and data to server
     snprintf(buffer, BUFFER_SIZE, "%d %s", part, data);
     sendto(sock_fd, buffer, strlen(buffer), 0, (struct sockaddr *)&server_addr, sizeof(server_addr));
     printf("Client sent (Part %d): %s\n", part, data);
 
-    // Receive response from server
     socklen_t addr_len = sizeof(server_addr);
     if (part == 1) {
         recvfrom(sock_fd, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&server_addr, &addr_len);
