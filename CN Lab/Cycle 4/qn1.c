@@ -37,13 +37,15 @@ void update_distance_vectors(DistanceVector routers[]) {
         updated = 0;
         for (int i = 0; i < num_routers; i++) {
             for (int j = 0; j < num_routers; j++) {
-                if (cost_matrix[i][j] != 0) {
+                if (i != j) { // Allow updates from all routers, not just direct neighbors
                     for (int k = 0; k < num_routers; k++) {
-                        // check if distance of i to k is larger than i to j + j to k
-                        if (routers[i].distance[k] > routers[i].distance[j] + routers[j].distance[k]) {
-                            routers[i].distance[k] = routers[i].distance[j] + routers[j].distance[k];
-                            routers[i].next_hop[k] = j;
-                            updated = 1;
+                        if (routers[i].distance[j] != INFINITY && routers[j].distance[k] != INFINITY) {
+                            int new_dist = routers[i].distance[j] + routers[j].distance[k];
+                            if (new_dist < routers[i].distance[k]) {
+                                routers[i].distance[k] = new_dist;
+                                routers[i].next_hop[k] = routers[i].next_hop[j]; // Forward through j
+                                updated = 1;
+                            }
                         }
                     }
                 }
