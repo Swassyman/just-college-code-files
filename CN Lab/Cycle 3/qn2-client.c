@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
+
 #define PORT 12345
 #define BUFFER_SIZE 1024
 
@@ -27,6 +28,7 @@ void start_client(int part, const char *data) {
 
     socklen_t addr_len = sizeof(server_addr);
     if (part == 1) {
+        memset(buffer, 0, BUFFER_SIZE);
         recvfrom(sock_fd, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&server_addr, &addr_len);
         printf("Client received (Part %d): %s\n", part, buffer);
     } else if (part == 2) {

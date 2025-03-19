@@ -25,6 +25,7 @@ void reverse_string(char *str) {
 void handle_part_a(char *data, char *response) {
     strcpy(response, data);
     reverse_string(response);
+    response[BUFFER_SIZE - 1] = '\0';
 }
 
 void handle_part_b(int data, int *response) {
@@ -59,6 +60,8 @@ void start_server() {
     printf("Server started and listening on port %d...\n", PORT);
 
     while (1) {
+        memset(buffer, 0, BUFFER_SIZE);  // Clear the buffer before using it
+
         int bytes_received = recvfrom(server_fd, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&client_addr, &addr_len);
         if (bytes_received < 0) {
             perror("Receive failed");
