@@ -57,9 +57,11 @@ int main() {
         }
 
         read(new_socket, buffer, BUFFER_SIZE);
+        //read first token of buffer with delimiter ,
         int n = atoi(strtok(buffer, ","));
         int arr[n];
         for (int i = 0; i < n; i++) {
+            //Null means continue positon of last read buffer
             arr[i] = atoi(strtok(NULL, ","));
         }
 

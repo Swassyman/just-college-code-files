@@ -18,8 +18,9 @@ int main() {
     }
 
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(PORT);
+    serv_addr.sin_port = htons(PORT); //converting port to network byte order
 
+    //converts ip address to binary format and stores it in sin_addr
     if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
         printf("\nInvalid address/ Address not supported \n");
         return -1;
@@ -33,10 +34,11 @@ int main() {
     int arr[] = {10, 20, 30, 40, 50};
     int n = sizeof(arr) / sizeof(arr[0]);
     char data[BUFFER_SIZE];
+    //first element has size of array
     snprintf(data, BUFFER_SIZE, "%d", n);
     for (int i = 0; i < n; i++) {
         char temp[10];
-        snprintf(temp, 10, ",%d", arr[i]);
+        snprintf(temp, 10, ",%d", arr[i]); //writes to a char buffer
         strcat(data, temp);
     }
 
