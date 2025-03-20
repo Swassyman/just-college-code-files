@@ -5,6 +5,7 @@ void resetAlloted(int blocks, int allotted[]) {
 		allotted[i] = 0;
 	}
 }
+
 void bestfit(int id, int mem, int blocks, int memory[], int allotted[]){ 
 	int i, index=-1;
     for (i = 0; i < blocks; i++) {  
