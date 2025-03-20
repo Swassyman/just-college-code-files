@@ -1,15 +1,15 @@
 #include<stdio.h>
 
-void resetAlloted(int blocks, int allotted[]) {
-	for(int i = 0; i<blocks; i++) {
+void resetAlloted(int n, int allotted[]) {
+	for(int i = 0; i<n; i++) {
 		allotted[i] = 0;
 	}
 }
 
-void bestfit(int id, int mem, int blocks, int memory[], int allotted[]){ 
+void bestfit(int id, int process_size, int n_blocks, int memory[], int allotted[]){ 
 	int i, index=-1;
-    for (i = 0; i < blocks; i++) {  
-        if (memory[i] >= mem && allotted[i]!=1) {                
+    for (i = 0; i < n_blocks; i++) {  
+        if (memory[i] >= process_size && allotted[i]!=1) {                
             if(index == -1) index=i;
             else if(memory[index] > memory[i])
             	index=i;
@@ -27,26 +27,26 @@ void bestfit(int id, int mem, int blocks, int memory[], int allotted[]){
     } 
 } 
 
-void firstfit(int id, int mem, int blocks, int memory[], int allotted[]) { 
+void firstfit(int id, int process_size, int n_blocks, int memory[], int allotted[]) { 
 	int i;
-    for (i = 0; i < blocks; i++) {  
-        if (memory[i] >= mem && allotted[i]!=1) {  
+    for (i = 0; i < n_blocks; i++) {  
+        if (memory[i] >= process_size && allotted[i]!=1) {  
             printf("Process %d was allocated block %d\n", id, i); 
             allotted[i]=1;
             printf("\n"); 
             return;
         }  
     }  
-    if (i == blocks) {  
+    if (i == n_blocks) {  
         printf("The process %d cannot be allocated\n", id);  
         return;
     }  
 }
 
-void worstfit(int id, int mem, int blocks, int memory[], int allotted[]) { 
+void worstfit(int id, int process_size, int n_blocks, int memory[], int allotted[]) { 
 	int i, index=-1;
-    for (i = 0; i < blocks; i++) {  
-        if (memory[i] >= mem && allotted[i]!=1) {                
+    for (i = 0; i < n_blocks; i++) {  
+        if (memory[i] >= process_size && allotted[i]!=1) {                
             if(index == -1) index=i;
             else if(memory[index] < memory[i])
             	index=i;
@@ -65,14 +65,14 @@ void worstfit(int id, int mem, int blocks, int memory[], int allotted[]) {
 }
 
 int main() {
-	int blocks;
+	int n_blocks;
 	printf("Enter the number of blocks in the system: ");
-	scanf("%d", &blocks);
+	scanf("%d", &n_blocks);
 
-	int memory[blocks],allotted[blocks];
+	int memory[n_blocks],allotted[n_blocks];
 
 	printf("Enter the size of the different blocks:\n");
-	for(int i = 0; i < blocks; i++) {
+	for(int i = 0; i < n_blocks; i++) {
 		scanf("%d", &memory[i]);
 		allotted[i]=0;
 	}
@@ -83,7 +83,7 @@ int main() {
 	
 	int process[n_processes];
 	printf("Enter the size of the different processes:\n");
-	for(int i = 0; i < blocks; i++) {
+	for(int i = 0; i < n_blocks; i++) {
 		scanf("%d", &process[i]);
 	}
 
@@ -99,21 +99,21 @@ int main() {
 
 		switch(choice) {
 			case 1:
-				resetAlloted(blocks, allotted);
+				resetAlloted(n_blocks, allotted);
 				for(int i = 0; i<n_processes; i++) {
-					firstfit(i, process[i], blocks, memory, allotted);
+					firstfit(i, process[i], n_blocks, memory, allotted);
 				}
 				break;
 			case 2:
-				resetAlloted(blocks, allotted);
+				resetAlloted(n_blocks, allotted);
 				for(int i = 0; i<n_processes; i++) {
-					bestfit(i, process[i], blocks, memory, allotted);
+					bestfit(i, process[i], n_blocks, memory, allotted);
 				}
 				break;
 			case 3:
-				resetAlloted(blocks, allotted);
+				resetAlloted(n_blocks, allotted);
 				for(int i = 0; i<n_processes; i++) {
-					worstfit(i, process[i], blocks, memory, allotted);
+					worstfit(i, process[i], n_blocks, memory, allotted);
 				}
 				break;
 			case 4:
