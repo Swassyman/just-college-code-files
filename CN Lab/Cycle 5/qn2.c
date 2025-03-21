@@ -3,7 +3,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define WINDOW_SIZE 4
+#define WINDOW_SIZE 3
 #define TOTAL_FRAMES 10
 
 void send_frame(int frame_number) {
@@ -62,7 +62,7 @@ int main() {
         sleep(1);
 
         if (receive_ack(window_start, last_in_order_frame)) {
-            printf("Sender: ACK %d received. Sliding window forward.\n", last_in_order_frame + 1);
+            printf("Sliding window forward.\n");
             window_start = last_in_order_frame + 1;
         } else {
             printf("Sender: ACK lost. Resending frames from %d.\n", window_start);

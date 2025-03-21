@@ -3,7 +3,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define WINDOW_SIZE 4
+#define WINDOW_SIZE 3
 #define TOTAL_FRAMES 10
 
 int ack[TOTAL_FRAMES] = {0};
