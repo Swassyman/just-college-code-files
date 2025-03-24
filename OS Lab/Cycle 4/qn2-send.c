@@ -4,7 +4,6 @@
 #include <sys/shm.h>
 #include <string.h>
 
-#define BUFFER_SIZE 100
 #define CLASS_SIZE 3
 
 typedef struct {
