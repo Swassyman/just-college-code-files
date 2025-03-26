@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <arpa/inet.h>
-#include <unistd.h>
 
 #define PORT 12345
 #define BUFFER_SIZE 1024
@@ -14,7 +13,6 @@ int main() {
     int addrlen = sizeof(server_address);
     server_address.sin_family = AF_INET;
     server_address.sin_port = htons(PORT);
-    server_address.sin_addr.s_add=INADRR_ANY;
 
     connect(client_fd, (struct sockaddr *)&server_address, addrlen);
 
@@ -22,11 +20,12 @@ int main() {
     int n = sizeof(arr)/sizeof(arr[0]);
 
     char data[BUFFER_SIZE];
+    data[0] = n;
     for(int i = 0; i < n; i++) {
         data[i+1] = arr[i];
     }
 
-    send(client_fd, data, n, 0);
+    send(client_fd, data, BUFFER_SIZE, 0);
     printf("Array sent to server: ");
 
     char buffer[BUFFER_SIZE];
