@@ -15,9 +15,7 @@ int n_clients = 0;
 void broadcast_message(int sender_fd, const char *message) {
     for (int i = 0; i < MAX_CLIENTS; i++) {
         if (clients[i] != -1 && clients[i] != sender_fd) {
-            if (send(clients[i], message, strlen(message), 0) < 0) {
-                perror("Send failed");
-            }
+            send(clients[i], message, strlen(message), 0);
         }
     }
 }
@@ -56,26 +54,15 @@ int main() {
         clients[i] = -1;
     }
 
-    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-        perror("Socket creation failed");
-        exit(EXIT_FAILURE);
-    }
+    server_fd = socket(AF_INET, SOCK_STREAM, 0);
 
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = INADDR_ANY;
     server_addr.sin_port = htons(PORT);
 
-    if (bind(server_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) == -1) {
-        perror("Bind failed");
-        close(server_fd);
-        exit(EXIT_FAILURE);
-    }
+    bind(server_fd, (struct sockaddr *)&server_addr, sizeof(server_addr));
 
-    if (listen(server_fd, 5) == -1) {
-        perror("Listen failed");
-        close(server_fd);
-        exit(EXIT_FAILURE);
-    }
+    listen(server_fd, 5);
 
     printf("Server started on port 12345. Waiting for connections...\n");
 
@@ -95,18 +82,11 @@ int main() {
             }
         }
 
-        if (select(max_fd + 1, &read_fds, NULL, NULL, NULL) == -1) {
-            perror("Select failed");
-            exit(EXIT_FAILURE);
-        }
+        select(max_fd + 1, &read_fds, NULL, NULL, NULL);
 
         if (FD_ISSET(server_fd, &read_fds)) {
-            if ((client_fd = accept(server_fd, (struct sockaddr *)&client_addr, &client_len)) == -1) {
-                perror("Accept failed");
-            } else {
-                add_client(client_fd);
-                printf("New connection from %s:%d\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
-            }
+            client_fd = accept(server_fd, (struct sockaddr *)&client_addr, &client_len);
+            add_client(client_fd);
         }
 
         for (int i = 0; i < MAX_CLIENTS; i++) {
