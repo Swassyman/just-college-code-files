@@ -11,29 +11,25 @@ int main() {
     int client_fd = socket(AF_INET, SOCK_STREAM, 0);
 
     struct sockaddr_in server_address;
-    int addrlen = sizeof(server_address);
     server_address.sin_family = AF_INET;
     server_address.sin_port = htons(PORT);
-    server_address.sin_addr.s_add=INADRR_ANY;
+    server_address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 
-    connect(client_fd, (struct sockaddr *)&server_address, addrlen);
+    connect(client_fd, (struct sockaddr *)&server_address, sizeof(server_address));
 
-    int arr[] = { 10, 20, 30, 40, 50};
-    int n = sizeof(arr)/sizeof(arr[0]);
+    int arr[] = {10, 20, 30, 40, 50};
+    int n = sizeof(arr) / sizeof(arr[0]);
 
     char data[BUFFER_SIZE];
-    for(int i = 0; i < n; i++) {
-        data[i+1] = arr[i];
-    }
+    memcpy(data, &n, sizeof(n));
+    memcpy(data + sizeof(n), arr, sizeof(arr));
 
-    send(client_fd, data, n, 0);
-    printf("Array sent to server: ");
+    send(client_fd, data, sizeof(n) + sizeof(arr), 0);
 
-    char buffer[BUFFER_SIZE];
-    read(client_fd, buffer, BUFFER_SIZE);
-    printf("%s\n", buffer);
+    char response[BUFFER_SIZE] = {0};
+    read(client_fd, response, BUFFER_SIZE);
+    printf("%s\n", response);
 
-
-
+    close(client_fd);
     return 0;
 }
