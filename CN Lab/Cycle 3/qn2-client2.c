@@ -10,43 +10,32 @@ int main() {
     int number;
     float result;
 
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-        perror("Socket creation error");
-        exit(EXIT_FAILURE);
-    }
+    sock = socket(AF_INET, SOCK_STREAM, 0);
 
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(12345);
+    serv_addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 
-    if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
-        perror("Invalid address/ Address not supported");
-        close(sock);
-        exit(EXIT_FAILURE);
-    }
-
-    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
-        perror("Connection Failed");
-        close(sock);
-        exit(EXIT_FAILURE);
-    }
+    connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
 
     char data_type;
     read(sock, &data_type, sizeof(data_type));
 
-    if (data_type == 's') {
-        int bytes_read = read(sock, buffer, sizeof(buffer) - 1);
-        if (bytes_read > 0) {
+    switch (data_type) {
+        case 's': {
+            int bytes_read = read(sock, buffer, sizeof(buffer));
             buffer[bytes_read] = '\0';
             printf("Reversed string: %s\n", buffer);
+            break;
         }
-    } else if (data_type == 'i') {
-        if (read(sock, &number, sizeof(number)) > 0) {
+        case 'i':
+            read(sock, &number, sizeof(number));
             printf("Squared number: %d\n", number);
-        }
-    } else if (data_type == 'f') {
-        if (read(sock, &result, sizeof(result)) > 0) {
-            printf("Adjusted value: %f\n", result);
-        }
+            break;
+        case 'f':
+            read(sock, &result, sizeof(result));
+            printf("Processed float: %f\n", result);
+            break;
     }
 
     close(sock);
