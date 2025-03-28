@@ -6,27 +6,27 @@
 #define WINDOW_SIZE 3
 #define TOTAL_FRAMES 10
 
-void send_frame(int frame_number) {
-    printf("Sender: Sending frame %d\n", frame_number);
+void sendFrame(int frameNumber) {
+    printf("Sender: Sending frame %d\n", frameNumber);
 }
 
-int receive_frame(int frame_number) {
+int receiveFrame(int frameNumber) {
     if (rand() % 3) {
-        printf("Receiver: Frame %d received\n", frame_number);
+        printf("Receiver: Frame %d received\n", frameNumber);
         return 1;
     } else {
-        printf("Receiver: Frame %d lost\n", frame_number);
+        printf("Receiver: Frame %d lost\n", frameNumber);
         return 0;
     }
 }
 
-void send_ack(int frame_number) {
-    printf("Receiver: Sending ACK %d\n", frame_number);
+void sendACK(int frameNumber) {
+    printf("Receiver: Sending ACK %d\n", frameNumber);
 }
 
-int receive_ack(int expected_ack, int last_ack) {
+int receiveACK(int lastACK) {
     if (rand() % 3) {
-        printf("Sender: ACK %d received\n", last_ack);
+        printf("Sender: ACK %d received\n", lastACK);
         return 1;
     } else {
         return 0;
@@ -36,36 +36,36 @@ int receive_ack(int expected_ack, int last_ack) {
 int main() {
     srand(time(NULL));
 
-    int window_start = 0;
+    int windowStart = 0;
     int ack_received = -1;
 
-    while (window_start < TOTAL_FRAMES) {
-        for (int i = window_start; i < window_start + WINDOW_SIZE && i < TOTAL_FRAMES; i++) {
-            send_frame(i);
+    while (windowStart < TOTAL_FRAMES) {
+        for (int i = windowStart; i < windowStart + WINDOW_SIZE && i < TOTAL_FRAMES; i++) {
+            sendFrame(i);
         }
 
         sleep(1);
 
-        int last_in_order_frame = window_start - 1;
-        for (int i = window_start; i < window_start + WINDOW_SIZE && i < TOTAL_FRAMES; i++) {
-            if (receive_frame(i)) {
-                last_in_order_frame = i;
+        int lastInOrderFrame = windowStart - 1;
+        for (int i = windowStart; i < windowStart + WINDOW_SIZE && i < TOTAL_FRAMES; i++) {
+            if (receiveFrame(i)) {
+                lastInOrderFrame = i;
             } else {
                 break;
             }
         }
 
-        if (last_in_order_frame >= window_start) {
-            send_ack(last_in_order_frame);
+        if (lastInOrderFrame >= windowStart) {
+            sendACK(lastInOrderFrame);
         }
 
         sleep(1);
 
-        if (receive_ack(window_start, last_in_order_frame)) {
+        if (receiveACK(lastInOrderFrame)) {
             printf("Sliding window forward.\n");
-            window_start = last_in_order_frame + 1;
+            windowStart = lastInOrderFrame + 1;
         } else {
-            printf("Sender: ACK lost. Resending frames from %d.\n", window_start);
+            printf("Sender: ACK lost. Resending frames from %d.\n", windowStart);
         }
 
         sleep(2);

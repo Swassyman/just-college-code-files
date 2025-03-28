@@ -5,67 +5,69 @@
 
 #define TOTAL_FRAMES 9
 
-int send_frame(int frame_number) {
-    printf("Sender: Sending frame %d\n", frame_number);
-    return frame_number;
+int sendFrame(int frameNumber) {
+    printf("Sender: Sending frame %d\n", frameNumber);
+    return frameNumber;
 }
 
-int receive_ack(int frame_number) {
+int receiveACK(int frameNumber) {
     // randomly simulating loss of ack
     if (rand() % 2) {
-        printf("Receiver: ACK %d received\n", frame_number);
+        printf("Receiver: ACK %d received\n", frameNumber);
         return 1;
     } else {
-        printf("Receiver: ACK %d lost\n", frame_number);
+        printf("Receiver: ACK %d lost\n", frameNumber);
         return 0;
     }
 }
 
-int receive_frame(int frame_number) {
+int receiveFrame(int frameNumber) {
     // randomly simulating frame loss
     if (rand() % 2) {
-        printf("Receiver: Frame %d received\n", frame_number);
+        printf("Receiver: Frame %d received\n", frameNumber);
         return 1;
     } else {
-        printf("Receiver: Frame %d lost\n", frame_number);
+        printf("Receiver: Frame %d lost\n", frameNumber);
         return 0;
     }
 }
 
-void send_ack(int frame_number) {
-    printf("Receiver: Sending ACK %d\n", frame_number);
+void sendACK(int frameNumber) {
+    printf("Receiver: Sending ACK %d\n", frameNumber);
 }
 
 int main() {
     srand(time(NULL));
 
-    int frame_number = 0;
-    int ack_received;
+    int frameNumber = 0;
+    int ACKreceived;
 
-    while (frame_number < TOTAL_FRAMES) {
-        int sent_frame = send_frame(frame_number);
+    while (frameNumber < TOTAL_FRAMES) {
+        int sentFrame = sendFrame(frameNumber);
 
         // Simulate frame transmission delay
         sleep(1);
 
-        int frame_received = receive_frame(sent_frame);
+        int frameReceived = receiveFrame(sentFrame);
 
-        if (frame_received) {
-            send_ack(frame_number);
+        if(!frameReceived) {
+            printf("Sender: Frame %d lost. Retransmitting frame %d.\n", frameNumber, frameNumber);
+            continue;
+        }
+        else {
+            sendACK(frameNumber);
 
             // Simulate ACK transmission delay
             sleep(1);
 
-            ack_received = receive_ack(frame_number);
+            ACKreceived = receiveACK(frameNumber);
 
-            if (ack_received) {
-                printf("Sender: ACK %d received. Moving to next frame.\n", frame_number);
-                frame_number++;
+            if (ACKreceived) {
+                printf("Sender: ACK %d received. Moving to next frame.\n", frameNumber);
+                frameNumber++;
             } else {
-                printf("Sender: ACK %d not received. Retransmitting frame %d.\n", frame_number, frame_number);
+                printf("Sender: ACK %d not received. Retransmitting frame %d.\n", frameNumber, frameNumber);
             }
-        } else {
-            printf("Sender: Frame %d lost. Retransmitting frame %d.\n", frame_number, frame_number);
         }
 
         sleep(2);

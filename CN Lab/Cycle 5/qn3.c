@@ -9,33 +9,33 @@
 int ack[TOTAL_FRAMES] = {0};
 int received[TOTAL_FRAMES] = {0};
 
-void send_frame(int frame_number) {
-    printf("Sender: Sending frame %d\n", frame_number);
+void sendFrame(int frameNumber) {
+    printf("Sender: Sending frame %d\n", frameNumber);
 }
 
-int receive_frame(int frame_number) {
+int receiveFrame(int frameNumber) {
     if (rand() % 3) {
-        printf("Receiver: Frame %d received\n", frame_number);
-        received[frame_number] = 1;
+        printf("Receiver: Frame %d received\n", frameNumber);
+        received[frameNumber] = 1;
         return 1;
     } else {
-        printf("Receiver: Frame %d lost\n", frame_number);
+        printf("Receiver: Frame %d lost\n", frameNumber);
         return 0;
     }
 }
 
-void send_ack(int frame_number) {
-    printf("Receiver: Sending ACK %d\n", frame_number);
+void sendACK(int frameNumber) {
+    printf("Receiver: Sending ACK %d\n", frameNumber);
 }
 
-int receive_ack(int frame_number) {
-    if (received[frame_number]) {
+int receiveACK(int frameNumber) {
+    if (received[frameNumber]) {
         if (rand() % 3) {
-            printf("Sender: ACK %d received\n", frame_number);
-            ack[frame_number] = 1;
+            printf("Sender: ACK %d received\n", frameNumber);
+            ack[frameNumber] = 1;
             return 1;
         } else {
-            printf("Sender: ACK %d lost\n", frame_number);
+            printf("Sender: ACK %d lost\n", frameNumber);
         }
     }
     return 0;
@@ -44,31 +44,31 @@ int receive_ack(int frame_number) {
 int main() {
     srand(time(NULL));
 
-    int window_start = 0;
+    int windowStart = 0;
 
-    while (window_start < TOTAL_FRAMES) {
-        for (int i = window_start; i < window_start + WINDOW_SIZE && i < TOTAL_FRAMES; i++) {
+    while (windowStart < TOTAL_FRAMES) {
+        for (int i = windowStart; i < windowStart + WINDOW_SIZE && i < TOTAL_FRAMES; i++) {
             if (!ack[i]) {
-                send_frame(i);
+                sendFrame(i);
             }
         }
 
         sleep(1);
 
-        for (int i = window_start; i < window_start + WINDOW_SIZE && i < TOTAL_FRAMES; i++) {
-            if (!ack[i] && receive_frame(i)) {
-                send_ack(i);
+        for (int i = windowStart; i < windowStart + WINDOW_SIZE && i < TOTAL_FRAMES; i++) {
+            if (!ack[i] && receiveFrame(i)) {
+                sendACK(i);
             }
         }
 
         sleep(1);
 
-        for (int i = window_start; i < window_start + WINDOW_SIZE && i < TOTAL_FRAMES; i++) {
-            receive_ack(i);
+        for (int i = windowStart; i < windowStart + WINDOW_SIZE && i < TOTAL_FRAMES; i++) {
+            receiveACK(i);
         }
 
-        while (window_start < TOTAL_FRAMES && ack[window_start]) {
-            window_start++;
+        while (windowStart < TOTAL_FRAMES && ack[windowStart]) {
+            windowStart++;
         }
 
         sleep(2);
