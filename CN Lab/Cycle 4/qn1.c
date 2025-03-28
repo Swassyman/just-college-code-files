@@ -4,27 +4,26 @@
 #define MAX_ROUTERS 10
 #define INFINITY 9999
 
-int cost_matrix[MAX_ROUTERS][MAX_ROUTERS];
-int num_routers;
+int costMatrix[MAX_ROUTERS][MAX_ROUTERS];
+int numRouters;
 
-// Structure for Distance Vector Routing
 typedef struct {
     int distance[MAX_ROUTERS];
-    int next_hop[MAX_ROUTERS];
+    int nextHop[MAX_ROUTERS];
 } DistanceVector;
 
 void initialize_dvr(DistanceVector routers[]) {
-    for (int i = 0; i < num_routers; i++) {
-        for (int j = 0; j < num_routers; j++) {
+    for (int i = 0; i < numRouters; i++) {
+        for (int j = 0; j < numRouters; j++) {
             if (i == j) {
                 routers[i].distance[j] = 0;
-                routers[i].next_hop[j] = j;
-            } else if (cost_matrix[i][j] != 0) {
-                routers[i].distance[j] = cost_matrix[i][j];
-                routers[i].next_hop[j] = j;
+                routers[i].nextHop[j] = j;
+            } else if (costMatrix[i][j] != 0) {
+                routers[i].distance[j] = costMatrix[i][j];
+                routers[i].nextHop[j] = j;
             } else {
                 routers[i].distance[j] = INFINITY;
-                routers[i].next_hop[j] = -1;
+                routers[i].nextHop[j] = -1;
             }
         }
     }
@@ -35,15 +34,15 @@ void update_distance_vectors(DistanceVector routers[]) {
     int updated;
     do {
         updated = 0;
-        for (int i = 0; i < num_routers; i++) {
-            for (int j = 0; j < num_routers; j++) {
-                if (i != j) { // Allow updates from all routers, not just direct neighbors
-                    for (int k = 0; k < num_routers; k++) {
+        for (int i = 0; i < numRouters; i++) { //each router's table
+            for (int j = 0; j < numRouters; j++) { //i to j link is checked
+                if (i != j) {
+                    for (int k = 0; k < numRouters; k++) { //all other paths are checked
                         if (routers[i].distance[j] != INFINITY && routers[j].distance[k] != INFINITY) {
-                            int new_dist = routers[i].distance[j] + routers[j].distance[k];
-                            if (new_dist < routers[i].distance[k]) {
-                                routers[i].distance[k] = new_dist;
-                                routers[i].next_hop[k] = routers[i].next_hop[j]; // Forward through j
+                            int minDist = routers[i].distance[j] + routers[j].distance[k];
+                            if (minDist < routers[i].distance[k]) {
+                                routers[i].distance[k] = minDist;
+                                routers[i].nextHop[k] = routers[i].nextHop[j];
                                 updated = 1;
                             }
                         }
@@ -56,46 +55,46 @@ void update_distance_vectors(DistanceVector routers[]) {
 
 void print_distance_vector(int router, DistanceVector routers[]) {
     printf("Router %d Distance Vector:\n", router);
-    for (int i = 0; i < num_routers; i++) {
-        printf("  -> Router %d: Cost = %d, Next Hop = %d\n", i, routers[router].distance[i], routers[router].next_hop[i]);
+    for (int i = 0; i < numRouters; i++) {
+        printf("  -> Router %d: Cost = %d, Next Hop = %d\n", i, routers[router].distance[i], routers[router].nextHop[i]);
     }
 }
 
-void dijkstra(int source, int distance[], int next_hop[]) {
+void dijkstra(int source, int distance[], int nextHop[]) {
     int visited[MAX_ROUTERS] = {0};
 
-    for (int i = 0; i < num_routers; i++) {
+    for (int i = 0; i < numRouters; i++) {
         distance[i] = INFINITY;
-        next_hop[i] = -1;
+        nextHop[i] = -1;
     }
     distance[source] = 0;
 
-    for (int count = 0; count < num_routers - 1; count++) {
-        int min_distance = INFINITY, min_index = -1;
-        for (int v = 0; v < num_routers; v++) {
-            if (!visited[v] && distance[v] <= min_distance) {
-                min_distance = distance[v];
+    for (int count = 0; count < numRouters - 1; count++) {
+        int minDistance = INFINITY, min_index = -1;
+        for (int v = 0; v < numRouters; v++) {
+            if (!visited[v] && distance[v] <= minDistance) {
+                minDistance = distance[v];
                 min_index = v;
             }
         }
 
         visited[min_index] = 1;
 
-        for (int v = 0; v < num_routers; v++) {
-            if (!visited[v] && cost_matrix[min_index][v] && distance[min_index] != INFINITY &&
-                distance[min_index] + cost_matrix[min_index][v] < distance[v]) {
-                distance[v] = distance[min_index] + cost_matrix[min_index][v];
-                next_hop[v] = min_index;
+        for (int v = 0; v < numRouters; v++) {
+            if (!visited[v] && costMatrix[min_index][v] && distance[min_index] != INFINITY &&
+                distance[min_index] + costMatrix[min_index][v] < distance[v]) {
+                distance[v] = distance[min_index] + costMatrix[min_index][v];
+                nextHop[v] = min_index;
             }
         }
     }
 }
 
 // Print the shortest paths from a router for LSR
-void print_shortest_paths(int source, int distance[], int next_hop[]) {
+void print_shortest_paths(int source, int distance[], int nextHop[]) {
     printf("Router %d Shortest Paths:\n", source);
-    for (int i = 0; i < num_routers; i++) {
-        printf("  -> Router %d: Cost = %d, Next Hop = %d\n", i, distance[i], next_hop[i]);
+    for (int i = 0; i < numRouters; i++) {
+        printf("  -> Router %d: Cost = %d, Next Hop = %d\n", i, distance[i], nextHop[i]);
     }
 }
 
@@ -104,12 +103,12 @@ int main() {
     DistanceVector routers[MAX_ROUTERS];
 
     printf("Enter the number of routers: ");
-    scanf("%d", &num_routers);
+    scanf("%d", &numRouters);
 
     printf("Enter the cost matrix (0 for no direct link):\n");
-    for (int i = 0; i < num_routers; i++) {
-        for (int j = 0; j < num_routers; j++) {
-            scanf("%d", &cost_matrix[i][j]);
+    for (int i = 0; i < numRouters; i++) {
+        for (int j = 0; j < numRouters; j++) {
+            scanf("%d", &costMatrix[i][j]);
         }
     }
 
@@ -126,17 +125,17 @@ int main() {
                 initialize_dvr(routers);
                 update_distance_vectors(routers);
                 printf("\nFinal Distance Vectors:\n");
-                for (int i = 0; i < num_routers; i++) {
+                for (int i = 0; i < numRouters; i++) {
                     print_distance_vector(i, routers);
                 }
                 break;
 
             case 2:
                 printf("\nShortest Paths:\n");
-                for (int i = 0; i < num_routers; i++) {
-                    int distance[MAX_ROUTERS], next_hop[MAX_ROUTERS];
-                    dijkstra(i, distance, next_hop);
-                    print_shortest_paths(i, distance, next_hop);
+                for (int i = 0; i < numRouters; i++) {
+                    int distance[MAX_ROUTERS], nextHop[MAX_ROUTERS];
+                    dijkstra(i, distance, nextHop);
+                    print_shortest_paths(i, distance, nextHop);
                 }
                 break;
 
