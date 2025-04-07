@@ -1,0 +1,9 @@
+SET SERVEROUTPUT ON;
+DECLARE
+	num NUMBER:= 1;
+BEGIN
+	WHILE num<=10 LOOP
+		DBMS_OUTPUT.PUT_LINE(num);
+		num := num + 2;
+	END LOOP;
+END;
