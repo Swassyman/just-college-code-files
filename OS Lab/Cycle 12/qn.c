@@ -48,19 +48,19 @@ void c_scan(int requests[], int n, int head) {
 }
 
 int main() {
-    int diskRequests = 9;
-    // printf("Enter number of disk requests: ");
-    // scanf("%d", &diskRequests);
+    int diskRequests;
+    printf("Enter number of disk requests: ");
+    scanf("%d", &diskRequests);
 
-    int requests[] = {86, 147, 91, 177, 94, 150, 102, 175, 130};
-    // printf("Enter requests:\n");
-    // for(int i = 0; i<diskRequests; i++) {
-    //     scanf("%d", &requests[i]);
-    // }
+    int requests[diskRequests];
+    printf("Enter requests:\n");
+    for(int i = 0; i<diskRequests; i++) {
+        scanf("%d", &requests[i]);
+    }
 
-    int head = 143;
-    // printf("Enter initial head position: ");
-    // scanf("%d", &head);
+    int head;;
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
 
     int choice;
     while(1) {
