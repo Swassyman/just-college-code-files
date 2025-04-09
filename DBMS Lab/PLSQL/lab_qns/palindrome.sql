@@ -2,7 +2,7 @@ SET SERVEROUTPUT ON;
 DECLARE
 	num NUMBER;
 	rev NUMBER;
-	digit NUMBER;
+	digit NUMBER;	
 	temp NUMBER;
 BEGIN
 	FOR num IN 1..100 LOOP

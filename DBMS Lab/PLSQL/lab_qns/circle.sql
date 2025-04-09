@@ -6,6 +6,7 @@ DECLARE
     diff NUMBER;
     area NUMBER;
     circumference NUMBER;
+    PI CONSTANT NUMBER := 3.14;
 BEGIN
     lower_rad := &lower_rad;
     upper_rad := &upper_rad;
