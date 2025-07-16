@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1-1</title>
+</head>
+<body>
+  <input id="userInput" type="number" placeholder="0"/>
+  <button onclick="displaySquare()">Get Squared</button>
+  <p id="resultText">Input to find out!</p>
+  <script>
+    function displaySquare(){
+      const inputTag = document.getElementById("userInput")
+      const inputVal = inputTag.value
+      const pTag = document.getElementById("resultText")
+      pTag.innerHTML = inputVal*inputVal
+    }
+  </script>
+</body>
+</html>
