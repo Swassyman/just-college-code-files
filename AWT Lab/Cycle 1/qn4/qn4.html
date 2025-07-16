@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1-3</title>
+  </head>
+  <body>
+    <form>
+      <label for="fname">First Name</label>
+      <input type="text" placeholder="First name" id="fname" />
+      <label for="lname">Last Name</label>
+      <input type="text" placeholder="Last name" id="lname" /><br />
+      <label for="phnum">Phone Number</label>
+      <input type="number" placeholder="(+91) " id="phnum" /><br />
+      <label for="age">Age</label>
+      <input type="number" id="age" /><br />
+    </form>
+    <button onclick="display()">View Details</button>
+    <p id="details"></p>
+
+    <script>
+      function display() {
+        const fnameTag = document.getElementById("fname");
+        const lnameTag = document.getElementById("lname");
+        const phnumTag = document.getElementById("phnum");
+        const ageTag = document.getElementById("age");
+        const pTag = document.getElementById("details");
+
+        pTag.innerHTML =
+          "You are " +
+          fnameTag.value +
+          " " +
+          lnameTag.value +
+          " who is " +
+          ageTag.value +
+          " years old with phone number " +
+          phnumTag.value;
+      }
+    </script>
+  </body>
+</html>

@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1-3</title>
-</head>
-<body>
-  <input id="userInput" type="text" placeholder="Enter a string"/>
-  <button onclick="displayVowelCount()">How many vowels?</button>
-  <p id="resultText">Input to find out!</p>
-  <script>
-    function displayVowelCount(){
-      const inputTag = document.getElementById("userInput")
-      const inputVal = inputTag.value
-      const pTag = document.getElementById("resultText")
-      
-      let count = 0 
-      for (let i = 0; i < inputVal.length; i++) {
-        const element = inputVal[i].toLowerCase();
-        if(element === 'a' || element === 'e' || element === 'i' || element === 'o' || element === 'u')
-            count++
-      }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1-3</title>
+  </head>
+  <body>
+    <input id="userInput" type="text" placeholder="Enter a string" />
+    <button onclick="displayVowelCount()">How many vowels?</button>
+    <p id="resultText">Input to find out!</p>
+    <script>
+      function displayVowelCount() {
+        const inputTag = document.getElementById("userInput");
+        const inputVal = inputTag.value;
+        const pTag = document.getElementById("resultText");
 
-      pTag.innerHTML = count + " vowels"
-    }
-  </script>
-</body>
+        let count = 0;
+        for (let i = 0; i < inputVal.length; i++) {
+          const element = inputVal[i].toLowerCase();
+          if (
+            element === "a" ||
+            element === "e" ||
+            element === "i" ||
+            element === "o" ||
+            element === "u"
+          )
+            count++;
+        }
+
+        pTag.innerHTML = count + " vowels";
+      }
+    </script>
+  </body>
 </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1-6</title>
+  </head>
+  <style>
+    table,
+    th,
+    td {
+      border: 1px solid black;
+    }
+  </style>
+  <body>
+    <button onclick="printTable()">Print Table</button>
+    <table id="table">
+      <tr>
+        <th>Number</th>
+        <th>Square</th>
+        <th>Cube</th>
+      </tr>
+    </table>
+    <script>
+      let printed = false;
+      function printTable() {
+        if (printed) return;
+
+        const table = document.getElementById("table");
+
+        for (let i = 1; i <= 15; i++) {
+          table.innerHTML += `
+            <tr>
+              <td>${i}</td>
+              <td>${i * i}</td>
+              <td>${i * i * i}</td>
+            </tr>
+          `;
+        }
+
+        printed = true;
+      }
+    </script>
+  </body>
+</html>

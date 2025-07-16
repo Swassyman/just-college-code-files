@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1-5</title>
+    <style>
+      .card-container {
+        display: flex;
+        gap: 16px;
+        padding: 20px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 16px;
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card-container" id="cards"></div>
+    <script src="qn5.js"></script>
+
+    <script>
+      const cardContainer = document.getElementById("cards");
+      const numberOfCards = movies.length;
+
+      for (let i = 0; i < numberOfCards; i++) {
+        cardContainer.innerHTML += `
+        <div class="card">
+          <h1>${movies[i].name}</h1>
+          <p>Starring: ${movies[i].starring}</p>
+          <p>Language: ${movies[i].language}</p>
+          <p>Rating: ${movies[i].rating}/10</p>
+        </div>
+      `;
+      }
+    </script>
+  </body>
+</html>
