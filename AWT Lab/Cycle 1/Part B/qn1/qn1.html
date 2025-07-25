@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1-b-1</title>
+  </head>
+  <body>
+    <h1>Simple Interest Calculator</h1>
+    <form>
+      <input
+        id="principal"
+        type="number"
+        placeholder="Enter principal amount"
+      />
+      <input
+        id="rate"
+        type="number"
+        placeholder="Enter rate of interest anually"
+      />
+      <input id="duration" type="number" placeholder="Enter number of years" />
+      <button id="submitButton" type="button" onclick="calculate">OK</button>
+    </form>
+  </body>
+  <script>
+    let calculateButton = document.getElementById("submitButton");
+    calculateButton.addEventListener("click", calculate);
+    function calculate() {
+      let principal = document.getElementById("principal").value;
+      let rate = document.getElementById("rate").value;
+      let duration = document.getElementById("duration").value;
+
+      let simpleInterest = (principal * rate * duration) / 100;
+
+      alert(simpleInterest);
+    }
+  </script>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1-b-2</title>
+  </head>
+  <body>
+    <form>
+      <input id="passwordText" type="password" placeholder="Enter password" />
+      <button id="submitButton" type="button">Enter</button>
+    </form>
+    <h1 id="passwordStrength"></h1>
+  </body>
+  <script>
+    let button = document.getElementById("submitButton");
+    button.addEventListener("click", checkPass);
+    let passwordInput = document.getElementById("passwordText");
+    let passwordStrength = document.getElementById("passwordStrength");
+
+    let medRegex = /(?=.*[a-zA-Z])(?=.*\d){6,}/;
+    let strongRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&]){8,}/;
+
+    function checkPass() {
+      let password = passwordInput.value;
+
+      if (strongRegex.test(password)) passwordStrength.innerHTML = "STRONG";
+      else if (medRegex.test(password)) passwordStrength.innerHTML = "MEDIUM";
+      else passwordStrength.innerHTML = "WEAK";
+    }
+  </script>
+</html>

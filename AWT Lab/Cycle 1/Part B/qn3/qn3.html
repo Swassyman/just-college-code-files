@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1-b-3</title>
+  </head>
+  <body>
+    <h1>Registration</h1>
+    <form>
+      <input id="username" type="text" placeholder="Enter username" />
+      <input id="password" type="password" placeholder="Enter password" />
+      <input
+        id="confirm-password"
+        type="password"
+        placeholder="Re-enter password"
+      />
+      <input id="email" type="email" placeholder="Enter email ID" />
+      <input id="ph-number" type="text" placeholder="(+91)" />
+      <button id="submitButton" type="button">Register</button>
+    </form>
+    <p id="registrationStatus"></p>
+
+    <script>
+      let usernameInput = document.getElementById("username");
+      let passwordInput = document.getElementById("password");
+      let confirmPasswordInput = document.getElementById("confirm-password");
+      let emailInput = document.getElementById("email");
+      let phNumberInput = document.getElementById("ph-number");
+      let submitButton = document.getElementById("submitButton");
+      let registrationStatus = document.getElementById("registrationStatus");
+
+      submitButton.addEventListener("click", validate);
+
+      let usernameRegex = /(?=.*[a-zA-Z])[a-zA-Z]{6,}/;
+      let passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&]).{8,}/;
+      let emailRegex = /^[a-zA-Z0-9]+\@[a-zA-Z]+\.[a-zA-Z]{2,}/;
+      let phnumRegex = /^\d{10}$/;
+
+      function validate() {
+        let username = usernameInput.value;
+        if (!usernameRegex.test(username)) {
+          registrationStatus.innerHTML = "INVALID USERNAME";
+          return;
+        }
+
+        let password = passwordInput.value;
+        if (!passwordRegex.test(password)) {
+          registrationStatus.innerHTML = "INVALID PASSWORD";
+          return;
+        }
+
+        let confirmPassword = confirmPasswordInput.value;
+        if (password !== confirmPassword) {
+          registrationStatus.innerHTML = "DIFFERENT PASSWORDS";
+          return;
+        }
+
+        let email = emailInput.value;
+        if (!emailRegex.test(email)) {
+          registrationStatus.innerHTML = "INVALID EMAIL";
+          return;
+        }
+
+        let phnum = phNumberInput.value;
+        if (!phnumRegex.test(phnum)) {
+          registrationStatus.innerHTML = "INVALID PHONE NUMBER";
+          return;
+        }
+        registrationStatus.innerHTML = "SUCCESS";
+      }
+    </script>
+  </body>
+</html>
