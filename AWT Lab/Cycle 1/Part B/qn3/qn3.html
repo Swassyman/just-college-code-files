@@ -29,12 +29,12 @@
       let phNumberInput = document.getElementById("ph-number");
       let submitButton = document.getElementById("submitButton");
       let registrationStatus = document.getElementById("registrationStatus");
-
+      
       submitButton.addEventListener("click", validate);
 
       let usernameRegex = /(?=.*[a-zA-Z])[a-zA-Z]{6,}/;
       let passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&]).{8,}/;
-      let emailRegex = /^[a-zA-Z0-9]+\@[a-zA-Z]+\.[a-zA-Z]{2,}/;
+      let emailRegex = /^[a-zA-Z0-9]+\@[a-zA-Z]+\.[a-zA-Z]{3,}/;
       let phnumRegex = /^\d{10}$/;
 
       function validate() {
