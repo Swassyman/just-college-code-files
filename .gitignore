@@ -1,2 +1,5 @@
 *.out
 *.exe
+
+/node_modules/
+/build/

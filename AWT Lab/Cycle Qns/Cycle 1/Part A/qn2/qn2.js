@@ -9,7 +9,7 @@ class Student {
     document.writeln(
       this.name +
         " got " +
-        (this.mark2 + this.mark1) / 2 +
+        (this.mark2 + this.mark1) / 200 +
         "% for her final exam."
     );
   }
